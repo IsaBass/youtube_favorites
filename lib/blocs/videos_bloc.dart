@@ -39,21 +39,14 @@ class VideosBloc implements BlocBase {
   }
 
   @override
-  // TODO: implement hasListeners
   bool get hasListeners => throw UnimplementedError();
 
   @override
-  void notifyListeners() {
-    // TODO: implement notifyListeners
-  }
+  void notifyListeners() {}
 
   @override
-  void removeListener(listener) {
-    // TODO: implement removeListener
-  }
+  void removeListener(listener) {}
 
   @override
-  void addListener(listener) {
-    // TODO: implement addListener
-  }
+  void addListener(listener) {}
 }

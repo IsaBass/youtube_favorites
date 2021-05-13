@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Video {
   late String id;
   late String title;
@@ -29,5 +31,21 @@ class Video {
     );
   }
 
-  // factory Video.fromJson(String source) => Video.fromMap(json.decode(source));
+  String toJson() => json.encode({
+        'videoId': id,
+        'title': title,
+        'thumbnail': thumbnail,
+        'channel': channel,
+      });
+
+  factory Video.fromJson(String source) {
+    var enc = json.decode(source);
+
+    return Video(
+      id: enc['videoId'],
+      title: enc['title'],
+      thumbnail: enc['thumbnail'],
+      channel: enc['channel'],
+    );
+  }
 }

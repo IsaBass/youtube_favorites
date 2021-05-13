@@ -1,10 +1,14 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:yout_favorites/api/video.dart';
+import 'package:yout_favorites/blocs/favorites_bloc.dart';
 
 class VideoTile extends StatelessWidget {
   final Video video;
 
-  const VideoTile({Key? key, required this.video}) : super(key: key);
+  VideoTile({Key? key, required this.video}) : super(key: key);
+
+  final _favBloc = BlocProvider.getBloc<FavoritesBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -12,11 +16,16 @@ class VideoTile extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 4),
       child: Column(
         children: [
-          AspectRatio(
-            aspectRatio: 16 / 9,
-            child: Image.network(
-              video.thumbnail,
-              fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              _favBloc.youtController.load(video.id);
+            },
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.network(
+                video.thumbnail,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Container(
@@ -47,11 +56,25 @@ class VideoTile extends StatelessWidget {
                     ],
                   ),
                 ),
-                Icon(
-                  Icons.star_border_outlined,
-                  color: Colors.red,
-                  size: 32,
-                )
+                StreamBuilder<Map<String, Video>>(
+                  stream: _favBloc.outFavs,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData)
+                      return Container();
+                    else {
+                      return GestureDetector(
+                        onTap: () => _favBloc.toggleFavorite(video),
+                        child: Icon(
+                          snapshot.data!.containsKey(video.id)
+                              ? Icons.star
+                              : Icons.star_border_outlined,
+                          color: Colors.red,
+                          size: 32,
+                        ),
+                      );
+                    }
+                  },
+                ),
               ],
             ),
           ),

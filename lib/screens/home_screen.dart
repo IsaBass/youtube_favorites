@@ -1,13 +1,18 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:yout_favorites/api/video.dart';
+import 'package:yout_favorites/blocs/favorites_bloc.dart';
 import 'package:yout_favorites/blocs/videos_bloc.dart';
 import 'package:yout_favorites/delegates/data_search.dart';
+import 'package:yout_favorites/screens/favorites_screen.dart';
 import 'package:yout_favorites/screens/widgets/video_tile.dart';
 
 class HomeScreen extends StatelessWidget {
+  ////
+
   @override
   Widget build(BuildContext context) {
+    final _favBloc = BlocProvider.getBloc<FavoritesBloc>();
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -19,8 +24,27 @@ class HomeScreen extends StatelessWidget {
           child: Image.asset('images/logocolor.png', fit: BoxFit.cover),
         ),
         actions: [
-          Align(alignment: Alignment.center, child: Text('0')),
-          IconButton(icon: Icon(Icons.star_border), onPressed: () {}),
+          StreamBuilder<Map<String, Video>>(
+            stream: _favBloc.outFavs,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Container();
+              } else {
+                return Align(
+                  alignment: Alignment.center,
+                  child: Text('${snapshot.data!.length}'),
+                );
+              }
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.star),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => FavoritesScreen()),
+              );
+            },
+          ),
           IconButton(
               icon: Icon(Icons.search),
               onPressed: () async {

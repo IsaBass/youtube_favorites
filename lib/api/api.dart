@@ -47,7 +47,8 @@ class Api {
 
   List<Video> decode(http.Response resp) {
     if (resp.statusCode != 200) {
-      throw Exception("Falha ao chamar API videos");
+      throw Exception(
+          "Falha ao chamar API videos ${resp.statusCode}  ${resp.reasonPhrase}");
     }
 
     var mapa = <String, dynamic>{};
