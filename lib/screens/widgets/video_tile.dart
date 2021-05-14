@@ -8,10 +8,9 @@ class VideoTile extends StatelessWidget {
 
   VideoTile({Key? key, required this.video}) : super(key: key);
 
-  final _favBloc = BlocProvider.getBloc<FavoritesBloc>();
-
   @override
   Widget build(BuildContext context) {
+    final _favBloc = BlocProvider.getBloc<FavoritesBloc>();
     return Container(
       margin: EdgeInsets.symmetric(vertical: 4),
       child: Column(
@@ -59,20 +58,18 @@ class VideoTile extends StatelessWidget {
                 StreamBuilder<Map<String, Video>>(
                   stream: _favBloc.outFavs,
                   builder: (context, snapshot) {
-                    if (!snapshot.hasData)
-                      return Container();
-                    else {
-                      return GestureDetector(
-                        onTap: () => _favBloc.toggleFavorite(video),
-                        child: Icon(
-                          snapshot.data!.containsKey(video.id)
-                              ? Icons.star
-                              : Icons.star_border_outlined,
-                          color: Colors.red,
-                          size: 32,
-                        ),
-                      );
-                    }
+                    bool isFavorite = false;
+                    if (snapshot.hasData)
+                      isFavorite = snapshot.data!.containsKey(video.id);
+
+                    return GestureDetector(
+                      onTap: () => _favBloc.toggleFavorite(video),
+                      child: Icon(
+                        isFavorite ? Icons.star : Icons.star_border_outlined,
+                        color: Colors.red,
+                        size: 32,
+                      ),
+                    );
                   },
                 ),
               ],

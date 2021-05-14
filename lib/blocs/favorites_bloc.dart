@@ -17,11 +17,11 @@ class FavoritesBloc implements BlocBase {
     SharedPreferences.getInstance().then((prefs) {
       if (prefs.containsKey("favorites")) {
         String armaz = prefs.getString("favorites")!;
+        var decod = json.decode(armaz);
 
-        _favorites = json
-            .decode(armaz)
-            .map((k, v) => {k: Video.fromJson(v)})
-            .cast<Map<String, Video>>();
+        _favorites = decod.map((k, v) {
+          return MapEntry(k, Video.fromJson(v));
+        }).cast<String, Video>();
         //
         _favoritesController.sink.add(_favorites);
       }

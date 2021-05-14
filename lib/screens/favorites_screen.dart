@@ -2,10 +2,9 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:yout_favorites/api/video.dart';
 import 'package:yout_favorites/blocs/favorites_bloc.dart';
+import 'package:yout_favorites/youtubeplayer/youtubeplayer.dart';
 
 class FavoritesScreen extends StatelessWidget {
-  final _favsBloc = BlocProvider.getBloc<FavoritesBloc>();
-
 // YoutubePlayerIFrame(
 //     controller: _controller,
 //     aspectRatio: 16 / 9,
@@ -13,6 +12,7 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _favsBloc = BlocProvider.getBloc<FavoritesBloc>();
     return Scaffold(
       appBar: AppBar(
         title: Text("Favoritos"),
@@ -34,8 +34,11 @@ class FavoritesScreen extends StatelessWidget {
                   .map(
                     (v) => GestureDetector(
                       onTap: () {
-                        //TODO: CHAMA VIDEO PLAY
-                        _favsBloc.youtController.load(v.id);
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (_) => YoutubeAppDemo(
+                                  ids: ls.map((e) => e.id).toList())),
+                        );
                       },
                       onLongPress: () {
                         _favsBloc.toggleFavorite(v);
@@ -48,7 +51,11 @@ class FavoritesScreen extends StatelessWidget {
                               height: 50,
                               child: Image.network(v.thumbnail),
                             ),
-                            Expanded(child: Text(v.title)),
+                            Expanded(
+                                child: Text(
+                              v.title,
+                              maxLines: 2,
+                            )),
                           ],
                         ),
                       ),
