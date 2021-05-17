@@ -4,7 +4,6 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yout_favorites/api/video.dart';
-import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class FavoritesBloc implements BlocBase {
   ///
@@ -46,23 +45,12 @@ class FavoritesBloc implements BlocBase {
     });
   }
 
-  YoutubePlayerController youtController = YoutubePlayerController(
-    initialVideoId: 'K18cpp_-gP8',
-    params: YoutubePlayerParams(
-      // playlist: ['nPt8bK2gbaU', 'gQDByCdjUXw'], // Defining custom playlist
-      // startAt: Duration(seconds: 30),
-      showControls: true,
-      showFullscreenButton: true,
-    ),
-  );
-
   @override
   void addListener(listener) {}
 
   @override
   void dispose() {
     _favoritesController.close();
-    youtController.close();
 
     // youtController.p
   }

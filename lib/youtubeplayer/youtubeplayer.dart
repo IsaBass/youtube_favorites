@@ -17,8 +17,10 @@ import 'widgets/volume_slider.dart';
 
 class YoutubeAppDemo extends StatefulWidget {
   final List<String> ids;
+  final String idInicial;
 
-  const YoutubeAppDemo({Key? key, required this.ids}) : super(key: key);
+  const YoutubeAppDemo({Key? key, required this.ids, required this.idInicial})
+      : super(key: key);
   @override
   _YoutubeAppDemoState createState() => _YoutubeAppDemoState();
 }
@@ -31,7 +33,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
     super.initState();
 
     _controller = YoutubePlayerController(
-      initialVideoId: widget.ids.first,
+      initialVideoId: widget.idInicial,
       params: YoutubePlayerParams(
         playlist: widget.ids,
         startAt: Duration.zero,
@@ -40,6 +42,9 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
         desktopMode: true,
         privacyEnhanced: true,
         useHybridComposition: true,
+        captionLanguage: 'pt',
+        interfaceLanguage: 'pt',
+        autoPlay: true,
       ),
     );
 
@@ -65,7 +70,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
       controller: _controller,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Youtube Player IFrame'),
+          title: const Text('Youtube Player IFrame by IsaBass'),
         ),
         body: LayoutBuilder(
           builder: (context, constraints) {
@@ -115,7 +120,7 @@ class Controls extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _space,
-          // MetaDataSection(),
+          MetaDataSection(),
           _space,
           // SourceInputSection(),
           _space,

@@ -12,7 +12,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //
     final _favBloc = BlocProvider.getBloc<FavoritesBloc>();
+    //
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -21,7 +23,10 @@ class HomeScreen extends StatelessWidget {
         //leadingWidth: 200,
         title: Container(
           height: 60,
-          child: Image.asset('images/logocolor.png', fit: BoxFit.cover),
+          child: Image.asset(
+            'images/logo3.jpeg',
+            fit: BoxFit.cover,
+          ),
         ),
         actions: [
           StreamBuilder<Map<String, Video>>(
@@ -41,7 +46,9 @@ class HomeScreen extends StatelessWidget {
             icon: Icon(Icons.star),
             onPressed: () {
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => FavoritesScreen()),
+                MaterialPageRoute(
+                  builder: (_) => FavoritesScreen(),
+                ),
               );
             },
           ),

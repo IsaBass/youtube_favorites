@@ -2,6 +2,7 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:yout_favorites/api/video.dart';
 import 'package:yout_favorites/blocs/favorites_bloc.dart';
+import 'package:yout_favorites/youtubeplayer/youtubeplayer.dart';
 
 class VideoTile extends StatelessWidget {
   final Video video;
@@ -17,7 +18,15 @@ class VideoTile extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              _favBloc.youtController.load(video.id);
+              //_favBloc.youtController.load(video.id);
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => YoutubeAppDemo(
+                    idInicial: video.id,
+                    ids: [video.id],
+                  ),
+                ),
+              );
             },
             child: AspectRatio(
               aspectRatio: 16 / 9,

@@ -37,6 +37,7 @@ class FavoritesScreen extends StatelessWidget {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                               builder: (_) => YoutubeAppDemo(
+                                  idInicial: v.id,
                                   ids: ls.map((e) => e.id).toList())),
                         );
                       },

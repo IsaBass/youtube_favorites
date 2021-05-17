@@ -42,7 +42,8 @@ class MetaDataSection extends StatelessWidget {
                             child: Text(
                               '${rate}x',
                               style: TextStyle(
-                                color: Theme.of(context).primaryColor,
+                                color: Colors
+                                    .white, //Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w300,
                               ),
                             ),
@@ -78,14 +79,14 @@ class _Text extends StatelessWidget {
       text: TextSpan(
         text: '$title : ',
         style: TextStyle(
-          color: Theme.of(context).primaryColor,
+          color: Colors.white, // Theme.of(context).primaryColor,
           fontWeight: FontWeight.bold,
         ),
         children: [
           TextSpan(
             text: value,
             style: TextStyle(
-              color: Theme.of(context).primaryColor,
+              color: Colors.white, //Theme.of(context).primaryColor,
               fontWeight: FontWeight.w300,
             ),
           ),
